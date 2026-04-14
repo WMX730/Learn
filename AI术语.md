@@ -1,4 +1,4 @@
-# AI 产品术语
+# AI 术语
 
 ## LLM 大语言模型
 目前大部分主流LLM基于Transformer架构  
