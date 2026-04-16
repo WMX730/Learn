@@ -130,25 +130,56 @@ Zero-shot → Few-shot →微调
 <img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/40169fd1-460c-431f-8ac1-33d8166eae6a" />
 
 ## 19、SFT (Supervised Fine-Tuning) 监督微调
-
+人工准备几千到几万条问题+标准答案的数据对，让模型学习在收到问题时应该用什么格式、什么风格、什么逻辑来回答。训练完之后模型从文字续写机器变成了问答助手。
+### 三个关键点
+- **数据质量决定一切**：放进去的标准答案就是模型学到的上限，答案质量差模型不可能学好。
+- **数据不需要很多**：几千条高质量问答对就能显著改善效果，不需要百万级数据量。
+- **SFT的局限**：它教会模型怎么回答，但不能教会模型判断什么回答是好的。
 
 ## 20、RLHF (Reinforcement Learning from Human Feedback) 人类反馈强化学习
+### 三步流程
+- **收集偏好数据**：同一个问题让模型生成多个回答，人工标注员对比排序哪个更好。
+- **训练奖励模型**：用排序数据训练一个专门打分的模型，让它学会人类标注员的偏好标准。
+- **PPO强化学习**：用奖励模型的打分信号去优化大模型，让它学会生成得分更高的回答。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/ddc387b4-63ec-4786-a054-75c2386ee736" />
 
-
-## 21、LoRA 低秩适应
-
+## 21、LoRA (Low-Rank Adaptation) 低秩适应
+全参微调一次GPT-3.5级别的模型，要改模型所有参数，GPU费用几万到十几万。  
+LoRA的做法完全不同，冻住原始模型参数不动，在旁边加两个很小的矩阵做增量训练。训练出的结果像一个补丁贴在原模型上，只改了0.1%-1%的参数，效果却能接近全参微调。  
+LoRA擅长风格和格式调整，对需要模型学习全新知识领域的场景效果有限。要灌新知识还是得靠RAG。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/830cbc42-e81e-446b-a9ce-a6a44dad0308" />
 
 ## 22、Distillation 知识蒸馏
-
+核心思路：用大模型教小模型。先用GPT-4对大量问题生成高质量回答，再拿这些回答当训练数据去训练一个小得多的模型。  
+关键在于小模型不只学答案本身，还学大模型的概率分布，就是大模型对每个Token的信心程度。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/c97ba4ee-30dc-49bb-a7ef-a043f3ddf33a" />
 
 ## 23、Quantization 量化
-
+核心操作：把模型参数的精度从高位降到低位。精度降了，但体积也缩了。  
+原来每个参数用32位浮点数存储，量化到INT8就只用8位，量化到INT4只用4位。  
+量化方案选型时关注两个指标：困惑度损失越小越好，推理速度提升倍数越大越好。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/80d9370d-2108-472d-9874-ddc9975c4463" />
 
 ## 24、Inference 推理
-
+训练是一次性投入，推理是持续性支出。模型训练好之后每用一次就是一次推理，每次推理都要花钱。  
+推理成本： 输入Token ✖ 输入单价 + 输出Token ✖ 输出单价 = 单次成本
+### 三个指标
+- **延迟Latency**：用户发出请求到收到完整回答的时间，直接影响用户体验。
+- **吞吐量Throughput**：系统每秒能处理多少并发请求，直接影响能服务多少用户。
+- **单次成本Cost per Query**：每次调用花多少钱，直接影响商业模型。
+### 优化推理成本
+量化降精度、蒸馏换小模型、Prompt精简减Token、缓存高频问答结果、批量推理提高GPU利用率。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/671fa0d9-e2f7-49a6-9bc1-3e43133f5ee1" />
 
 ## 25、Transformer
-
+Transformer是一种基于自注意力机制（Self-Attention）的深度学习模型，主要用于自然语言处理（NLP）和计算机视觉（CV）任务。  
+所有主流大模型的底层都是Transformer架构，2017 年Google提出。  
+核心代价：计算量和输入长度的平方成正比。
+### 架构
+### 核心特性
+- **并行计算**：早期的RNN架构必须一个词一个词按顺序处理，Transformer可以同时看所有词。  
+- **长距离依赖**：每个词都能直接关注到文本里任何位置的其他词，不会像 RNN 那样远距离信息衰减。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/7c1eb583-e18f-4dbb-9df0-b784e378c7b3" />
 
 ## 26、Attention 注意力机制
 
