@@ -195,7 +195,13 @@ Llama、Qwen、DeepSeek这些。优势是可以部署在自己服务器上数据
 <img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/c6f80799-a7e1-4296-b15c-bdc4fffeb0f3" />
 
 ## 28、多模态模型
-
+在统一语义空间里同时理解多种信息。  
+- **难点**：不同模态的信息密度差异大，图文不一致的时候模型容易答偏。  
+### 底层三步
+- **各模态独立编码**：图片用视觉编码器、文字用文本编码器。
+- **跨模态对齐**：把不同模态的特征映射到同一个语义空间。
+- **在共享空间完成推理和生成**
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/c83e3159-1546-447f-95e4-d20bd187a209" />
 
 ## 29、Context Window 上下文窗口
 
