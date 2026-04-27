@@ -204,10 +204,29 @@ Llama、Qwen、DeepSeek这些。优势是可以部署在自己服务器上数据
 <img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/c83e3159-1546-447f-95e4-d20bd187a209" />
 
 ## 29、Context Window 上下文窗口
-
+一个反直觉的事实，窗口越大不代表效果越好。当上下文超过一定长度后，模型对中间位置信息的关注度会下降。  
+### 三步协同
+- **分块**：把大文档切成语义完整的段落。  
+- **检索**：根据用户问题只召回最相关的几个段落。
+- **精排**：把最关键的内容放在上下文的开头和结尾。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/cee54870-4a7d-429f-9cc4-46a4a0c497ea" />
 
 ## 30、Vector Database 向量数据库
-
+向量数据库是专门为高维向量检索设计的数据库。核心能力：在百万甚至亿级向量中做最近邻搜索，速度在毫秒级。传统数据库做不到这个速度。
+### 工作流程
+文档经过Embedding模型转成向量存入向量数据库。用户查询也转成向量，在库中做最近邻搜索，返回语义最相似的 Top-K 结果。传统数据库搜头疼怎么办找不到偏头痛缓解方法，向量数据库因为是按语义相似度搜索所以能找到。
+### 选型关注的四个指标
+- **检索速度**：百万级向量搜索要在毫秒级。
+- **召回率**：相关文档有多大比例被找到。
+- **支持规模**：能存多少条向量。
+- **运维成本**：否需要独立部署和专人运维。
+### 主流选型
+Pinecone 全托管省心但贵  
+Milvus 开源适合大规模场景  
+Weaviate 开源混合搜索好  
+Chroma 轻量级快速上手  
+总结：小规模验证用 Chroma 够了，生产环境看 Milvus 或 Pinecone。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/edb6256a-85b8-43e5-a469-d5ffacb1dc63" />
 
 ## 31、Chunking 文档分块
 
