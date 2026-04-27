@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025–2026年自动驾驶行业趋势报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #0a1628;
+    --accent: #00d4ff;
+    --accent2: #7b61ff;
+    --surface: #0f2040;
+    --surface2: #162a4a;
+    --text: #e8edf5;
+    --text-dim: #8892a4;
+    --border: #1e3a5f;
+    --green: #00e396;
+    --orange: #ffb443;
+    --red: #ff6b6b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0a1628 0%, #0d2847 40%, #1a0a3e 100%);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 60px 40px;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(0,212,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(123,97,255,0.06) 0%, transparent 50%);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes drift { to { transform: translate(40px, -30px); } }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; text-align: center; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
+    color: var(--accent); padding: 6px 20px; border-radius: 20px;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 64px); font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.2; margin-bottom: 20px;
+  }
+  .hero-sub { font-size: 18px; color: var(--text-dim); margin-bottom: 40px; }
+  .hero-meta { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+  .hero-meta-item { text-align: center; }
+  .hero-meta-value { font-size: 32px; font-weight: 800; color: var(--accent); }
+  .hero-meta-label { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+  /* Nav */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,22,40,0.9); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; display: flex; align-items: center; height: 60px;
+    gap: 8px; overflow-x: auto;
+  }
+  .nav a {
+    color: var(--text-dim); text-decoration: none; font-size: 14px;
+    padding: 8px 14px; border-radius: 6px; white-space: nowrap; transition: all 0.2s;
+  }
+  .nav a:hover { color: var(--accent); background: rgba(0,212,255,0.08); }
+
+  /* Sections */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-alt { background: var(--surface); }
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-tag {
+    display: inline-block; color: var(--accent); font-size: 13px;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+    background: linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-desc { color: var(--text-dim); margin-top: 16px; font-size: 16px; }
+
+  /* KPI Cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .kpi-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px; text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,212,255,0.1); }
+  .kpi-icon { font-size: 32px; margin-bottom: 12px; }
+  .kpi-value {
+    font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .kpi-label { color: var(--text-dim); font-size: 14px; margin-top: 6px; }
+
+  /* Chart Container */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+  .chart-box {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+  }
+  .chart-box h3 { font-size: 16px; color: var(--text); margin-bottom: 20px; }
+  .chart-box.full { grid-column: 1 / -1; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 40px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2));
+  }
+  .timeline-item { position: relative; margin-bottom: 36px; }
+  .timeline-dot {
+    position: absolute; left: -33px; top: 4px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--primary);
+    box-shadow: 0 0 12px rgba(0,212,255,0.4);
+  }
+  .timeline-date { color: var(--accent); font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .timeline-text { color: var(--text-dim); font-size: 15px; }
+
+  /* Comparison Table */
+  .comp-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+  .comp-table th {
+    background: var(--surface2); color: var(--accent); font-size: 13px;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 14px 18px; text-align: left; border-bottom: 2px solid var(--border);
+  }
+  .comp-table td {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    font-size: 14px; color: var(--text-dim);
+  }
+  .comp-table tr:hover td { background: rgba(0,212,255,0.03); }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .tag-green { background: rgba(0,227,150,0.15); color: var(--green); }
+  .tag-blue { background: rgba(0,212,255,0.15); color: var(--accent); }
+  .tag-purple { background: rgba(123,97,255,0.15); color: var(--accent2); }
+  .tag-orange { background: rgba(255,180,67,0.15); color: var(--orange); }
+
+  /* Tech Stack */
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .tech-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px; position: relative; overflow: hidden;
+  }
+  .tech-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .tech-card h3 { font-size: 18px; margin-bottom: 12px; }
+  .tech-card p { color: var(--text-dim); font-size: 14px; }
+
+  /* Risk Cards */
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .risk-card {
+    background: var(--surface2); border-left: 4px solid var(--orange);
+    border-radius: 0 12px 12px 0; padding: 24px;
+  }
+  .risk-card h4 { font-size: 15px; margin-bottom: 8px; }
+  .risk-card p { color: var(--text-dim); font-size: 13px; }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 40px;
+    border-top: 1px solid var(--border); color: var(--text-dim); font-size: 13px;
+  }
+
+  /* Cluster Map */
+  .cluster-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .cluster-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+  }
+  .cluster-card h4 {
+    font-size: 16px; margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cluster-card .loc { color: var(--text-dim); font-size: 13px; margin-bottom: 12px; }
+  .cluster-card ul { list-style: none; padding: 0; }
+  .cluster-card li { color: var(--text-dim); font-size: 14px; padding: 4px 0; }
+  .cluster-card li::before { content: '▸ '; color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .hero { padding: 40px 20px; }
+    .section { padding: 60px 20px; }
+    .nav { padding: 0 20px; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .cluster-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🚗 行业深度研究报告</div>
+    <h1>2025–2026年<br>自动驾驶行业趋势</h1>
+    <p class="hero-sub">技术突破 · 政策松绑 · 资本回流 · 商业化元年</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">4,500亿</div>
+        <div class="hero-meta-label">2025年中国产业规模</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">66.1%</div>
+        <div class="hero-meta-label">L2渗透率</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">1,680亿$</div>
+        <div class="hero-meta-label">2035年Robotaxi市场预期</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">360万</div>
+        <div class="hero-meta-label">2035年Robotaxi车队规模</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#overview">市场概览</a>
+  <a href="#tech">技术演进</a>
+  <a href="#policy">政策法规</a>
+  <a href="#competition">竞争格局</a>
+  <a href="#segments">细分赛道</a>
+  <a href="#timeline">时间线</a>
+  <a href="#risks">风险挑战</a>
+  <a href="#outlook">未来展望</a>
+</nav>
+
+<!-- Section 1: 市场概览 -->
+<div class="section" id="overview">
+  <div class="section-header">
+    <div class="section-tag">Market Overview</div>
+    <h2 class="section-title">市场规模与宏观数据</h2>
+    <p class="section-desc">2025年自动驾驶产业进入商业化落地关键拐点，中美双核驱动全球发展</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">🌏</div>
+      <div class="kpi-value">4,461亿</div>
+      <div class="kpi-label">2025年全球市场规模（元）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🇨🇳</div>
+      <div class="kpi-value">3,832亿</div>
+      <div class="kpi-label">2025年中国市场规模（元）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📈</div>
+      <div class="kpi-value">30%+</div>
+      <div class="kpi-label">2025–2030年均增长率</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🚕</div>
+      <div class="kpi-value">1,680亿$</div>
+      <div class="kpi-label">2035年Robotaxi市场规模</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-value">582亿</div>
+      <div class="kpi-label">2025年中国融资总额（元）</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📊</div>
+      <div class="kpi-value">81.9%</div>
+      <div class="kpi-label">融资额同比增长</div>
+    </div>
+  </div>
+
+  <div class="chart-grid" style="margin-top:40px;">
+    <div class="chart-box">
+      <h3>📊 中国自动驾驶市场规模预测（亿元）</h3>
+      <canvas id="chartMarket"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>🚗 L2/L3/L4 渗透率趋势</h3>
+      <canvas id="chartPenetration"></canvas>
+    </div>
+    <div class="chart-box full">
+      <h3>🌍 全球Robotaxi市场规模预测（亿美元）</h3>
+      <canvas id="chartRobotaxi"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: 技术演进 -->
+<div class="section section-alt" id="tech">
+  <div class="section-header">
+    <div class="section-tag">Technology Evolution</div>
+    <h2 class="section-title">技术路线演进</h2>
+    <p class="section-desc">端到端大模型全面上车，感知硬件成本持续下降，技术融合成主流</p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <h3>🔭 感知层：多传感器融合</h3>
+      <p>激光雷达均价降至<strong style="color:var(--green)">2,000元内</strong>，渗透率突破17%。主流路线为"视觉+激光雷达+毫米波"多传感器融合，特斯拉坚持纯视觉方案。</p>
+    </div>
+    <div class="tech-card">
+      <h3>🧠 算法层：端到端大模型</h3>
+      <p>一段式（特斯拉FSD V12）vs 两段式（华为ADS 4.0、小鹏XNGP）。端到端实现"感知–决策–规控"一体化，拟人化驾驶体验大幅提升。</p>
+    </div>
+    <div class="tech-card">
+      <h3>⚡ 计算层：算力持续升级</h3>
+      <p>地平线征程6达<strong style="color:var(--accent)">1,000 TOPS</strong>，国产芯片市占率超60%。L3需500–1,000 TOPS，L4需1,000+ TOPS。</p>
+    </div>
+    <div class="tech-card">
+      <h3>🌐 车路云一体化</h3>
+      <p>中国特色路线："聪明的车+智慧的路+V2X"。51个车联网试点城市，路侧覆盖超3,500公里，降低单车智能依赖。</p>
+    </div>
+  </div>
+
+  <div class="chart-grid" style="margin-top:40px;">
+    <div class="chart-box">
+      <h3>💲 激光雷达均价下降趋势（元）</h3>
+      <canvas id="chartLidar"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>🖥️ 车载AI芯片算力演进（TOPS）</h3>
+      <canvas id="chartChip"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: 政策法规 -->
+<div class="section" id="policy">
+  <div class="section-header">
+    <div class="section-tag">Policy & Regulation</div>
+    <h2 class="section-title">政策法规密集落地</h2>
+    <p class="section-desc">中国率先突破L3商业化准入，美国联邦监管松绑，欧洲谨慎推进</p>
+  </div>
+
+  <div class="cluster-grid">
+    <div class="cluster-card">
+      <h4>🇨🇳 中国：全球最积极</h4>
+      <div class="loc">国家 + 100+城市</div>
+      <ul>
+        <li>2025.04 《自动驾驶汽车道路交通安全管理办法》— 明确L3责任划分</li>
+        <li>2025.09 《汽车行业稳增长方案》— 批准L3车型生产准入</li>
+        <li>2025.12 首批L3准入许可 — 长安深蓝、北汽极狐获证</li>
+        <li>2025.06 深圳开放L4 Robotaxi商业化收费（全国首个）</li>
+        <li>100+城市开放自动驾驶路权</li>
+      </ul>
+    </div>
+    <div class="cluster-card">
+      <h4>🇺🇸 美国：联邦松绑</h4>
+      <div class="loc">联邦 + 州级立法</div>
+      <ul>
+        <li>NHTSA明确不强制Robotaxi配备方向盘/踏板</li>
+        <li>德州、加州、亚利桑那扩大商业化许可</li>
+        <li>特斯拉Cybercab获准无方向盘设计</li>
+        <li>联邦豁免申请流程仍较慢</li>
+      </ul>
+    </div>
+    <div class="cluster-card">
+      <h4>🇪🇺 欧洲：谨慎推进</h4>
+      <div class="loc">欧盟 + 成员国</div>
+      <ul>
+        <li>德国2023年落地全球首个L4自动驾驶立法</li>
+        <li>欧盟《AI法案》配套安全认证标准制定中</li>
+        <li>Waymo 2026年进军伦敦 — 首次踏出美国</li>
+      </ul>
+    </div>
+    <div class="cluster-card">
+      <h4>📋 数据安全</h4>
+      <div class="loc">全球监管趋势</div>
+      <ul>
+        <li>中国《汽车数据安全管理补充规定》2025.10出台</li>
+        <li>高精地图跨境传输限制影响中国企业出海</li>
+        <li>GDPR对欧洲自动驾驶数据合规要求严格</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: 竞争格局 -->
+<div class="section section-alt" id="competition">
+  <div class="section-header">
+    <div class="section-tag">Competition Landscape</div>
+    <h2 class="section-title">全球竞争格局</h2>
+    <p class="section-desc">Waymo领跑商业化运营，特斯拉纯视觉路线挑战行业，中国企业规模化出海</p>
+  </div>
+
+  <h3 style="font-size:20px;margin-bottom:20px;text-align:center;">🚕 全球Robotaxi三强对比</h3>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>维度</th>
+        <th>Waymo（美国）</th>
+        <th>Tesla（美国）</th>
+        <th>萝卜快跑（中国）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>运营规模</strong></td>
+        <td>美国10城，每周50万+次，累计2,000万次</td>
+        <td>奥斯汀+达拉斯/休斯顿，573辆，快速扩展中</td>
+        <td>全球22城，累计超1,700万次出行</td>
+      </tr>
+      <tr>
+        <td><strong>传感器方案</strong></td>
+        <td><span class="tag tag-green">激光雷达+毫米波+摄像头</span></td>
+        <td><span class="tag tag-blue">纯摄像头</span></td>
+        <td><span class="tag tag-green">多传感器融合</span></td>
+      </tr>
+      <tr>
+        <td><strong>专用车型</strong></td>
+        <td>改装Jaguar I-PACE（第六代）</td>
+        <td>Cybercab（无方向盘，2026年量产）</td>
+        <td>主要基于量产车改装</td>
+      </tr>
+      <tr>
+        <td><strong>扩展策略</strong></td>
+        <td>逐城高精度测绘，稳扎稳打</td>
+        <td>神经网络，理论上快速全国铺开</td>
+        <td>政府合作+城市试点</td>
+      </tr>
+      <tr>
+        <td><strong>安全记录</strong></td>
+        <td><span class="tag tag-green">行业最佳</span></td>
+        <td><span class="tag tag-orange">7起碰撞（无重伤）</span></td>
+        <td><span class="tag tag-green">良好</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="chart-grid" style="margin-top:40px;">
+    <div class="chart-box">
+      <h3>🏆 中国激光雷达市场竞争格局</h3>
+      <canvas id="chartLidarMarket"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>🏭 中国四大自动驾驶产业集群</h3>
+      <canvas id="chartCluster"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: 细分赛道 -->
+<div class="section" id="segments">
+  <div class="section-header">
+    <div class="section-tag">Market Segments</div>
+    <h2 class="section-title">细分赛道进展</h2>
+    <p class="section-desc">Robotaxi、智能乘用车、无人货运、Robobus 多线并进</p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <h3>🚕 Robotaxi（无人出租车）</h3>
+      <p>2026年为行业拐点。中国：萝卜快跑订单超700万次；小马智行、文远知行车队均突破1,000辆。全球：中美共同主导，预计2035年车队规模360万辆。</p>
+    </div>
+    <div class="tech-card">
+      <h3>🚗 智能网联乘用车</h3>
+      <p>L2渗透率66.1%，城市NOA渗透率15.1%。"智驾平权"：30万以下车型NOA占比68.9%，比亚迪、零跑加入智驾军备竞赛。</p>
+    </div>
+    <div class="tech-card">
+      <h3>🚚 无人货运</h3>
+      <p>干线物流：嬴彻科技重卡保有量超5万辆，商业化先于乘用场景。末端配送：无人配送车交付量突破3万台，覆盖100+城市。</p>
+    </div>
+    <div class="tech-card">
+      <h3>🚌 Robobus（智能公交）</h3>
+      <p>多个城市开展无人驾驶公交常态化运营。文远知行深耕自动驾驶巴士，计划2026年进军欧美市场。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section 6: 时间线 -->
+<div class="section section-alt" id="timeline">
+  <div class="section-header">
+    <div class="section-tag">Key Milestones</div>
+    <h2 class="section-title">关键事件时间线</h2>
+    <p class="section-desc">从技术验证到商业化落地的历史性跨越</p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2025年4月</div>
+      <div class="timeline-text">中国《自动驾驶汽车道路交通安全管理办法》落地，首次明确L3级责任划分边界</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2025年6月</div>
+      <div class="timeline-text">深圳成为全国首个开放L4 Robotaxi商业化收费的城市，取消主驾安全员</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2025年9月</div>
+      <div class="timeline-text">工信部等八部门联合印发《汽车行业稳增长工作方案（2025–2026年）》</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2025年12月</div>
+      <div class="timeline-text">工信部发放首批L3级自动驾驶车型准入许可，长安深蓝SL03、北汽极狐获证</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2026年1月</div>
+      <div class="timeline-text">特斯拉在奥斯汀实现完全无监督Robotaxi运营（$4.20/次推广价）</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2026年2月</div>
+      <div class="timeline-text">特斯拉Cybercab首台量产车在德州超级工厂下线，专用于无人驾驶</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2026年4月</div>
+      <div class="timeline-text">Waymo在美国10城实现每周50万次付费出行；特斯拉Robotaxi扩展至达拉斯/休斯顿</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2026年–2027年</div>
+      <div class="timeline-text">预计L3级多城市多车型落地；上海建成2,000平方公里开放测试区域</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2028–2030年</div>
+      <div class="timeline-text">端到端+世界模型技术成熟；L4级乘用车开始规模上市；部分Robotaxi企业实现盈亏平衡</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2035年</div>
+      <div class="timeline-text">全球Robotaxi市场规模达1,680亿美元，车队规模360万辆</div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 7: 风险挑战 -->
+<div class="section" id="risks">
+  <div class="section-header">
+    <div class="section-tag">Risks & Challenges</div>
+    <h2 class="section-title">风险与挑战</h2>
+    <p class="section-desc">商业化之路仍面临多重障碍，需产业与政策协同突破</p>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <h4>⚖️ 法规滞后</h4>
+      <p>L4级法规体系仍不完善；美国联邦与各州法规不统一；欧洲安全认证标准尚未统一；事故责任界定、保险配套尚未完全解决</p>
+    </div>
+    <div class="risk-card">
+      <h4>💥 安全事故风险</h4>
+      <p>任何重大事故均可能触发监管收紧。特斯拉早期用户报告逆行、幽灵刹车等问题，需持续验证系统可靠性</p>
+    </div>
+    <div class="risk-card">
+      <h4>💰 成本压力</h4>
+      <p>L4级Robotaxi单车成本虽降至约30万元，但大多数企业仍未实现盈利，商业可持续性有待长周期验证</p>
+    </div>
+    <div class="risk-card">
+      <h4>🌧️ 技术瓶颈</h4>
+      <p>恶劣天气（暴雪/暴雨/暴雾）、无保护左转、复杂施工路段等"长尾场景"仍是算法难题</p>
+    </div>
+    <div class="risk-card">
+      <h4>🔒 数据安全</h4>
+      <p>高精地图与行驶数据的跨境传输限制，影响中国企业全球化扩张；各国数据主权要求日益严格</p>
+    </div>
+    <div class="risk-card">
+      <h4>🌐 地缘政治</h4>
+      <p>中美在芯片领域的供应链博弈；中国企业赴美上市及运营面临审查；英伟达高端芯片出口限制影响算力升级</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section 8: 未来展望 -->
+<div class="section section-alt" id="outlook">
+  <div class="section-header">
+    <div class="section-tag">Future Outlook</div>
+    <h2 class="section-title">未来五大核心趋势</h2>
+    <p class="section-desc">2026–2030年，自动驾驶将完成从"技术展示"到"规模商业"的历史性跨越</p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <h3>① 技术融合而非分裂</h3>
+      <p>激光雷达与视觉方案的争论趋于淡化，端到端大模型将进一步融合VLA（视觉-语言-行动）和世界模型，向通用驾驶智能演进。</p>
+    </div>
+    <div class="tech-card">
+      <h3>② 数据飞轮效应主导竞争</h3>
+      <p>特斯拉600万辆在路车辆 vs. Waymo专用测试车队。未来胜出的关键不仅是技术，更是数据壁垒的高度。</p>
+    </div>
+    <div class="tech-card">
+      <h3>③ 中国将主导全球车队规模</h3>
+      <p>凭借政策强力支持、完善的V2X基础设施和快速商业化节奏，中国Robotaxi车队部署规模将领跑全球。</p>
+    </div>
+    <div class="tech-card">
+      <h3>④ 商用场景先于乘用场景盈利</h3>
+      <p>干线物流（高速、固定路线、高里程）比Robotaxi更早具备商业闭环，嬴彻等企业有望在2026–2028年率先实现大规模盈利。</p>
+    </div>
+    <div class="tech-card">
+      <h3>⑤ 智驾×人形机器人协同爆发</h3>
+      <p>车载激光雷达技术正被迁移到服务机器人、人形机器人领域，出货量同比增速超400%，形成双轮驱动格局。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>📋 2025–2026年自动驾驶行业趋势报告</p>
+  <p style="margin-top:8px;">数据来源：中国信通院、Counterpoint Research、各企业公开披露 | 整理时间：2026年4月</p>
+  <p style="margin-top:8px; font-size:11px; color:#555;">⚠️ 本报告仅供参考，不构成投资建议</p>
+</div>
+
+<script>
+  // Chart.js global defaults
+  Chart.defaults.color = '#8892a4';
+  Chart.defaults.borderColor = '#1e3a5f';
+  Chart.defaults.font.family = "-apple-system, 'Segoe UI', sans-serif";
+
+  // 1. 中国市场规模预测
+  new Chart(document.getElementById('chartMarket'), {
+    type: 'bar',
+    data: {
+      labels: ['2023', '2024', '2025', '2027E', '2030E'],
+      datasets: [{
+        label: '市场规模（亿元）',
+        data: [1800, 2400, 3832, 6500, 12345],
+        backgroundColor: 'rgba(0,212,255,0.6)',
+        borderColor: '#00d4ff',
+        borderWidth: 1,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#1e3a5f' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 2. 渗透率趋势
+  new Chart(document.getElementById('chartPenetration'), {
+    type: 'line',
+    data: {
+      labels: ['2023', '2024', '2025', '2026E', '2027E', '2030E'],
+      datasets: [
+        { label: 'L2渗透率', data: [42, 58, 66.1, 72, 78, 85], borderColor: '#00d4ff', backgroundColor: 'rgba(0,212,255,0.1)', fill: true, tension: 0.4 },
+        { label: '城市NOA渗透率', data: [3, 9.5, 15.1, 22, 30, 45], borderColor: '#7b61ff', backgroundColor: 'rgba(123,97,255,0.1)', fill: true, tension: 0.4 },
+        { label: 'L3渗透率（预测）', data: [0, 0, 0.5, 3, 8, 25], borderColor: '#00e396', backgroundColor: 'rgba(0,227,150,0.1)', fill: true, tension: 0.4 },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { boxWidth: 12, font: { size: 11 } } } },
+      scales: {
+        y: { beginAtZero: true, max: 100, grid: { color: '#1e3a5f' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 3. 全球Robotaxi市场规模
+  new Chart(document.getElementById('chartRobotaxi'), {
+    type: 'line',
+    data: {
+      labels: ['2025', '2027E', '2029E', '2031E', '2033E', '2035E'],
+      datasets: [{
+        label: '市场规模（亿美元）',
+        data: [12, 45, 120, 350, 780, 1680],
+        borderColor: '#00d4ff',
+        backgroundColor: 'rgba(0,212,255,0.08)',
+        fill: true,
+        tension: 0.3,
+        pointBackgroundColor: '#00d4ff',
+        pointRadius: 5,
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        annotation: {
+          annotations: {
+            line1: { type: 'line', xMin: 2, xMax: 2, borderColor: '#ffb443', borderWidth: 2, label: { display: true, content: '2026 关键拐点', position: 'start' } }
+          }
+        }
+      },
+      scales: {
+        y: { type: 'logarithmic', grid: { color: '#1e3a5f' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 4. 激光雷达均价下降
+  new Chart(document.getElementById('chartLidar'), {
+    type: 'line',
+    data: {
+      labels: ['2021', '2022', '2023', '2024', '2025'],
+      datasets: [{
+        label: '均价（元）',
+        data: [8000, 5000, 3500, 2800, 2000],
+        borderColor: '#ffb443',
+        backgroundColor: 'rgba(255,180,67,0.1)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#ffb443',
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: false, grid: { color: '#1e3a5f' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 5. 芯片算力演进
+  new Chart(document.getElementById('chartChip'), {
+    type: 'bar',
+    data: {
+      labels: ['Orin X (2022)', '高通Ride (2023)', '地平线征程6 (2025)', '下一代(2027E)'],
+      datasets: [{
+        label: '算力（TOPS）',
+        data: [254, 200, 1000, 2000],
+        backgroundColor: ['rgba(0,212,255,0.6)', 'rgba(123,97,255,0.6)', 'rgba(0,227,150,0.6)', 'rgba(255,180,67,0.6)'],
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#1e3a5f' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // 6. 激光雷达市场竞争格局
+  new Chart(document.getElementById('chartLidarMarket'), {
+    type: 'doughnut',
+    data: {
+      labels: ['禾赛科技（35%）', '速腾聚创（27.4%）', '其他中国厂商', '国外厂商'],
+      datasets: [{
+        data: [35, 27.4, 25, 12.6],
+        backgroundColor: ['#00d4ff', '#7b61ff', '#00e396', '#ffb443'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } } }
+    }
+  });
+
+  // 7. 四大产业集群
+  new Chart(document.getElementById('chartCluster'), {
+    type: 'polarArea',
+    data: {
+      labels: ['京津冀\n（北京）', '长三角\n（上海/苏州）', '珠三角\n（深圳/广州）', '成渝\n（重庆/成都）'],
+      datasets: [{
+        data: [92, 88, 95, 76],
+        backgroundColor: [
+          'rgba(0,212,255,0.5)',
+          'rgba(123,97,255,0.5)',
+          'rgba(0,227,150,0.5)',
+          'rgba(255,180,67,0.5)',
+        ],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } } },
+      scales: { r: { grid: { color: '#1e3a5f' }, ticks: { display: false } } }
+    }
+  });
+</script>
+</body>
+</html>
