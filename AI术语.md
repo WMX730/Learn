@@ -267,22 +267,51 @@ Chroma 轻量级快速上手
 
 ## 37、Grounding 接地
 ### 核心要求
-
+- **AI 的回答必须基于可验证的数据源，而不是凭模型记忆编**
+- **回答中要标注来源信息，用户能追溯验证**
 
 ## 38、Workflow 工作流
-
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/2b1299db-0597-4aae-99d6-0774c4652c22" />
 
 ## 39、Multi-Agent 多智能体
-
+Multi-Agent的核心思路是分工，每个 Agent 只负责一个垂直领域，做深做精，然后通过协调机制协同工作。
+### 主流架构
+- **Orchestrator 模式**：有一个协调者Agent负责理解用户需求、拆分任务、分发给对应的专家Agent，收集各Agent结果后汇总输出。
+- **讨论模式**：多个Agent围绕同一个问题各抒己见互相评审，最后综合出最佳方案。适合需要多角度分析的场景。
+### 设计Multi-Agent系统要定义四件事
+- **每个Agent的职责边界**
+- **Agent之间的通信协议**
+- **任务路由规则**
+- **冲突解决机制**
+### 最有效的Multi-Agent结构是三层
+- **顶层**：一个Router Agent做意图识别和任务分发
+- **中间层**：N个垂直Agent各管一个业务场景
+- **底层**：共享工具池
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/77454186-eedf-4beb-8ceb-94b4e87d386b" />
 
 ## 40、Planning 规划能力
-
+### 规划能力包含三个层次
+- **任务分解**：把一个复杂目标拆成多个可执行的子任务。
+- **依赖排序**：确定子任务的先后顺序和依赖关系，哪些可以并行哪些必须串行。
+- **动态调整**：执行过程中某一步失败了，重新规划后续步骤而不是直接崩溃。
+### 提升方向
+- **预定义骨架**：给出任务类型对应的执行计划模板，让模型在模板基础上微调，而不是从零开始规划。
+- **思维链强化**：要求模型先输出完整的执行计划再开始执行，计划不合理就重新生成。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/f9da6f0a-817c-4b1a-b220-5bfb1600fabe" />
 
 ## 41、Memory 记忆机制
+### 三层架构
+- **工作记忆**：当前对话的上下文，通过消息列表管理，关闭会话就清空。
+- **短期记忆**：近期几次会话的关键信息摘要，存在数据库里，保留最近7到30天。
+- **长期记忆**：用户的固定属性和偏好，比如过敏信息、角色设定、使用习惯，永久存储。
 
-
-## 42、ReAct 推理与行动
-
+## 42、ReAct（Reasoning and Acting） 推理与行动
+### 多步循环
+- **Thought推理**
+- **Action行动**
+- **Observation观察**
+- **再Thought**
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/e7a547a1-6646-4177-a5c0-5dbfb62b2876" />
 
 ## 43、 Tool Use 工具使用
 
@@ -302,17 +331,19 @@ Chroma 轻量级快速上手
 ## 48、Text-to-Image 文生图
 
 
-## 49、NER 命名实体识别
-
+## 49、NER（Named Entity Recognition） 命名实体识别
+- **概念**：从自然语言文本中识别并分类出预定义的实体类型。常见实体类型，人名、地名、时间、金额、组织名、产品名。在AI产品里，NER是连接用户自然语言和结构化操作的桥梁。
 
 ## 50、Intent Recognition 意图识别
 
 
 ## 51、Precision 精确率
-
+- **计算方式**：模型预测为正的结果里有多少真正是对的。
 
 ## 52、Recall 召回率
-
+- **计算方式**：实际为正的结果里有多少被模型找到了。
+- **F1 Score**：精确率和召回率的调和平均。
+- <img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/ed5edb09-32d9-4714-b91a-4cdb308ec689" />
 
 ## 53、Bad Case 分析
 
@@ -321,19 +352,36 @@ Chroma 轻量级快速上手
 
 
 ## 55、Human Evaluation 人工评测
-
+### 标准流程
+- **定义评测维度**：确性、相关性、流畅度、安全性、有用性，每个维度 1-5 分。
+- **准备评测集**：500-2000 条有代表性的Case，覆盖主要业务场景和边缘Case。
+- **双盲评测**：同一条样本两个人独立打分，计算一致性。一致性低于0.7说明评测标准不清晰需要重新校准。
+- **汇总报告**：按维度统计分数，找出短板。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/3ae95dae-7b2d-42d3-a462-bca5b0fe3afa" />
 
 ## 56、API
 
 
 ## 57、Latency 延迟
-
+### 构成
+网络传输约 50ms + 排队等待0到数秒 + 首Token生成约500ms + 逐Token输出 3-15 秒 + 网络返回约50ms。  
+其中排队等待在高峰期可能成为瓶颈，模型推理时间和输出长度正相关。
+### 优化点
+- **流式输出**：不等全部生成完就开始返回，用户感知延迟大幅降低。
+- **Prompt精简**：减少无效Token，每少1000 Token快0.5-1秒。
+- **模型选择**：同等能力选更快的模型，小模型比大模型快很多。
+- **预加载**：预判用户意图提前发请求。
+- **体验设计**：加loading动画、分步展示、先显示摘要再展开详情。让等待变得可以接受。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/f36bc5bb-a586-4003-86ae-77b930296d4b" />
 
 ## 58、Rate Limiting 限流
-
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/bc35d832-a7dd-4582-a74c-28c293f4ce34" />
 
 ## 59、 灰度发布
-
+### 标准灰度流程
+5%流量放新版本 → 跑3-7天 → 对比核心指标，准确率、满意度、延迟、成本，→ 指标显著优于旧版才放量 → 10% → 30% → 50% → 100%。  
+任何一步指标不达标就回滚到旧版本。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/a701623e-15b7-4c6e-ad53-9feb51af9778" />
 
 ## 60、数据飞轮
 ### 飞轮闭环
@@ -343,6 +391,4 @@ Chroma 轻量级快速上手
 - **显式反馈**
 - **行为数据**
 - **转化数据**
-
-
-
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/c8710eed-3821-436c-8a4e-0666baff7af4" />
