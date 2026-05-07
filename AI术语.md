@@ -229,13 +229,20 @@ Chroma 轻量级快速上手
 <img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/edb6256a-85b8-43e5-a469-d5ffacb1dc63" />
 
 ## 31、Chunking 文档分块
-
+### 主流分块策略
+- **固定大小切分**：每500字切一块加50字重叠。简单暴力但容易切断语义。
+- **按结构切分**：按文档的标题、段落、章节等结构切分。保留了文档逻辑但对文档格式有要求。
+- **语义分块**：用Embedding计算相邻句子的语义相似度，相似度骤降的地方就是语义边界，在边界处切分。效果最好但计算成本最高。
 
 ## 32、Reranking 重排序
-
+向量检索是粗排，速度快但精度有限。Reranking是精排，速度慢但精度高。先用向量检索快速拉出Top-20或Top-50候选，再用Reranking模型对候选做精细排序，最终只保留Top-3到Top-5给模型生成答案。
+<img width="640" height="640" alt="image" src="https://github.com/user-attachments/assets/97a6a94e-bdc2-4648-977f-b8f6734cd975" />
 
 ## 33、Hybrid Search 混合搜索
-
+### 做法：同一个查询同时跑两条路。
+- **第一条**：向量检索走Embedding相似度搜索。
+- **第二条**：关键词检索走BM25或传统倒排索引。
+- 两条路各返回一批结果，通过 RRF 或加权融合合并成一份排序列表。
 
 ## 34、Knowledge Graph 知识图谱
 
