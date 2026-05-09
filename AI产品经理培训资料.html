@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI产品经理新人培训资料</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --gray-900: #1e293b;
+            --gray-800: #334155;
+            --gray-700: #475569;
+            --gray-600: #64748b;
+            --gray-400: #94a3b8;
+            --gray-200: #e2e8f0;
+            --gray-100: #f1f5f9;
+            --gray-50: #f8fafc;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* 顶部导航 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 1000;
+            padding: 0 2rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 96px 2rem 4rem;
+        }
+
+        /* 封面区域 */
+        .hero {
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            padding: 4rem;
+            margin-bottom: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 目录 */
+        .toc {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .toc h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--gray-700);
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .toc-item:hover {
+            background: var(--white);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .toc-num {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .toc-text {
+            font-weight: 500;
+        }
+
+        /* 章节样式 */
+        .section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            scroll-margin-top: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .section-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--gradient-card);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* 特性列表 */
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .feature-item:hover {
+            background: var(--gray-100);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-content p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* 表格样式 */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--gray-900);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: var(--gray-50);
+        }
+
+        tr:hover {
+            background: var(--gray-100);
+        }
+
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-primary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .tag-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .tag-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .tag-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* 引用块 */
+        .quote {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+
+        .quote p {
+            font-size: 1.05rem;
+            color: var(--gray-700);
+            font-style: italic;
+        }
+
+        .quote cite {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            font-style: normal;
+        }
+
+        /* 步骤流程 */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 48px;
+            bottom: -1.5rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--gray-200));
+        }
+
+        .step:last-child::before {
+            display: none;
+        }
+
+        .step-content {
+            flex: 1;
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .step-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        /* 技能雷达 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .skill-level {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 100px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 100px;
+        }
+
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* 资源卡片 */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .resource-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .resource-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* 警告框 */
+        .alert {
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .alert-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .alert-info {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .alert h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .alert p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 代码块 */
+        .code-block {
+            background: var(--dark);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'Fira Code', 'Monaco', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .code-block .comment {
+            color: #64748b;
+        }
+
+        .code-block .keyword {
+            color: #c084fc;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        /* 附录 */
+        .appendix {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            color: white;
+        }
+
+        .appendix h2 {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .glossary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .glossary-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .glossary-term {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .glossary-def {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gray-200);
+            z-index: 999;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* 回到顶部 */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1.25rem;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 进度条 -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- 导航 -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#logoGrad)"/>
+                    <path d="M10 16L14 20L22 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#8b5cf6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                AI产品经理培训
+            </div>
+            <div class="nav-links">
+                <a href="#overview" class="nav-link active">概述</a>
+                <a href="#role" class="nav-link">角色定位</a>
+                <a href="#skills" class="nav-link">核心技能</a>
+                <a href="#workflow" class="nav-link">工作流程</a>
+                <a href="#prompt" class="nav-link">Prompt工程</a>
+                <a href="#resources" class="nav-link">学习资源</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 封面 -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    新人入职培训手册
+                </div>
+                <h1>AI产品经理<br>从入门到精通</h1>
+                <p>系统掌握AI时代产品经理的核心能力模型、工作方法与实践技巧，成为连接技术与商业的桥梁型人才。</p>
+                <div class="hero-meta">
+                    <span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        2026年最新版
+                    </span>
+                    <span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12,6 12,12 16,14"/>
+                        </svg>
+                        阅读时间约45分钟
+                    </span>
+                    <span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                        六大核心模块
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 目录 -->
+        <div class="toc" id="overview">
+            <h2>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"/>
+                    <line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/>
+                    <line x1="3" y1="18" x2="3.01" y2="18"/>
+                </svg>
+                培训大纲
+            </h2>
+            <div class="toc-grid">
+                <a href="#role" class="toc-item">
+                    <span class="toc-num">01</span>
+                    <span class="toc-text">角色定位：AI产品经理是什么</span>
+                </a>
+                <a href="#skills" class="toc-item">
+                    <span class="toc-num">02</span>
+                    <span class="toc-text">核心技能：能力模型与知识体系</span>
+                </a>
+                <a href="#workflow" class="toc-item">
+                    <span class="toc-num">03</span>
+                    <span class="toc-text">工作流程：从需求到落地的全流程</span>
+                </a>
+                <a href="#prompt" class="toc-item">
+                    <span class="toc-num">04</span>
+                    <span class="toc-text">Prompt工程：AI产品的核心竞争力</span>
+                </a>
+                <a href="#evaluation" class="toc-item">
+                    <span class="toc-num">05</span>
+                    <span class="toc-text">评估体系：构建AI产品的评价标准</span>
+                </a>
+                <a href="#resources" class="toc-item">
+                    <span class="toc-num">06</span>
+                    <span class="toc-text">学习资源：推荐书单与进阶路径</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 第一章：角色定位 -->
+        <section class="section" id="role">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">角色定位：AI产品经理是什么</h2>
+                    <p class="section-subtitle">理解AI时代产品经理的独特价值与核心差异</p>
+                </div>
+            </div>
+
+            <div class="quote">
+                <p>AI产品经理是技术创新与商业价值的转化枢纽，需同时理解机器学习技术栈和产品方法论，是连接"技术可能性"与"商业必要性"的桥梁。</p>
+                <cite>—— Gartner 2025 AI产品管理趋势报告</cite>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2rem 0 1rem; color: var(--dark);">与传统产品经理的核心差异</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>差异维度</th>
+                            <th>传统产品经理</th>
+                            <th>AI产品经理</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>技术理解深度</strong></td>
+                            <td>理解功能实现逻辑</td>
+                            <td>掌握监督/无监督学习适用场景，了解数据标注量、特征工程要求</td>
+                        </tr>
+                        <tr>
+                            <td><strong>不确定性管理</strong></td>
+                            <td>确定性需求，功能可预期</td>
+                            <td>建立效果评估体系（准确率/召回率/F1值的trade-off）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>工程化思维</strong></td>
+                            <td>关注功能上线与迭代</td>
+                            <td>熟悉模型部署Pipeline，考虑推理时延、计算资源消耗等约束</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据驱动方式</strong></td>
+                            <td>数据分析优化功能</td>
+                            <td>数据飞轮设计，让产品持续自我进化</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2rem 0 1rem; color: var(--dark);">AI产品经理的六大核心职责</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3>需求洞察与技术可行性评估</h3>
+                    <p>通过NPS调研、用户旅程地图区分真实需求与技术噱头，与算法团队协作评估技术边界，进行ROI分析。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>产品方案设计</h3>
+                    <p>主导构建特征体系，针对AI概率性输出设计降级方案，制定置信度阈值与人工审核触发机制。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>模型全生命周期管理</h3>
+                    <p>从实验阶段到上线阶段，再到迭代阶段，建立监控指标、处理bad case、推动模型优化。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3>跨团队协作</h3>
+                    <p>与算法团队用技术语言沟通，与工程团队制定合理SLA，协调标注团队构建领域语料库。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>数据闭环建设</h3>
+                    <p>建立持续数据反馈机制，将用户高价值交互自动筛选、清洗、标注、回流训练，防止模型衰减。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <h3>商业价值转化</h3>
+                    <p>将技术指标映射为商业指标，如准确率提升1%如何量化到GMV增长，完成价值闭环。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第二章：核心技能 -->
+        <section class="section" id="skills">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12,2 2,7 12,12 22,7 12,2"/>
+                        <polyline points="2,17 12,22 22,17"/>
+                        <polyline points="2,12 12,17 22,12"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">核心技能：能力模型与知识体系</h2>
+                    <p class="section-subtitle">构建AI产品经理的完整能力矩阵</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 1.5rem 0 1.5rem; color: var(--dark);">AI产品经理技能雷达</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧠</div>
+                    <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark);">技术理解力</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray-600); margin: 0.5rem 0;">掌握CNN/RNN/Transformer架构适用场景</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 85%;"></div>
+                    </div>
+                    <div class="skill-label">
+                        <span>初级</span>
+                        <span>精通</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">💡</div>
+                    <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark);">Prompt工程</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray-600); margin: 0.5rem 0;">设计AI交互逻辑，优化输出质量</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 90%;"></div>
+                    </div>
+                    <div class="skill-label">
+                        <span>初级</span>
+                        <span>精通</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
+                    <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark);">数据分析能力</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray-600); margin: 0.5rem 0;">构建评估体系，进行效果分析</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 80%;"></div>
+                    </div>
+                    <div class="skill-label">
+                        <span>初级</span>
+                        <span>精通</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔬</div>
+                    <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark);">实验设计能力</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray-600); margin: 0.5rem 0;">A/B测试设计，多方案对比分析</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 75%;"></div>
+                    </div>
+                    <div class="skill-label">
+                        <span>初级</span>
+                        <span>精通</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">💬</div>
+                    <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark);">跨团队协作</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray-600); margin: 0.5rem 0;">技术、业务、法务等多方沟通</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 85%;"></div>
+                    </div>
+                    <div class="skill-label">
+                        <span>初级</span>
+                        <span>精通</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                    <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark);">商业敏感度</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray-600); margin: 0.5rem 0;">技术价值向商业价值的转化</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 80%;"></div>
+                    </div>
+                    <div class="skill-label">
+                        <span>初级</span>
+                        <span>精通</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2.5rem 0 1.5rem; color: var(--dark);">技术知识图谱</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>机器学习基础</h4>
+                        <p>理解监督学习、无监督学习、半监督学习的适用场景；掌握分类、回归、聚类等基础算法原理；了解模型训练、验证、测试的基本流程。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>深度学习核心概念</h4>
+                        <p>了解CNN（图像处理）、RNN/LSTM（序列处理）、Transformer（注意力机制）等主流架构的适用场景和技术特点。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>大模型技术理解</h4>
+                        <p>掌握LLM的核心能力（文本生成、对话、推理）；理解RAG、微调、提示词工程等技术方案的优缺点和适用场景。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h4>数据工程基础</h4>
+                        <p>了解数据采集、清洗、标注的流程；掌握数据质量评估方法；能够设计数据回流机制，构建数据飞轮。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 2rem;">
+                <div class="alert-icon" style="color: var(--accent);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent);">技术深度建议</h4>
+                    <p>作为AI产品经理，不需要成为算法工程师，但需要"足够的技术理解力"：能够与算法团队进行有效沟通，判断技术方案的可行性，理解模型的能力边界和局限性。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第三章：工作流程 -->
+        <section class="section" id="workflow">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">工作流程：从需求到落地的全流程</h2>
+                    <p class="section-subtitle">AI产品开发的完整生命周期管理</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 1.5rem 0 2rem; color: var(--dark);">AI产品开发五阶段流程</h3>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>需求分析阶段</h4>
+                        <p><strong>核心任务：</strong>识别用户痛点，判断AI是否能有效解决，评估技术可行性与商业价值。</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="tag tag-primary">用户调研</span>
+                            <span class="tag tag-primary">技术评估</span>
+                            <span class="tag tag-success">ROI分析</span>
+                        </div>
+                        <div class="alert alert-warning" style="margin: 1rem 0 0; padding: 1rem;">
+                            <div style="font-size: 0.85rem;">
+                                <strong>关键产出：</strong>需求文档 + 技术可行性评估报告 + 商业价值预估
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>方案设计阶段</h4>
+                        <p><strong>核心任务：</strong>设计产品架构，选择技术路线，制定Prompt策略，设计评估体系。</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="tag tag-primary">架构设计</span>
+                            <span class="tag tag-primary">Prompt设计</span>
+                            <span class="tag tag-warning">评估体系</span>
+                        </div>
+                        <div class="alert alert-warning" style="margin: 1rem 0 0; padding: 1rem;">
+                            <div style="font-size: 0.85rem;">
+                                <strong>关键产出：</strong>产品方案文档 + 评估测试集 + Baseline模型效果报告
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>模型开发阶段</h4>
+                        <p><strong>核心任务：</strong>协调算法团队进行模型训练/微调，推动Prompt迭代优化，管理数据标注。</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="tag tag-primary">模型训练</span>
+                            <span class="tag tag-warning">Prompt迭代</span>
+                            <span class="tag tag-success">数据标注</span>
+                        </div>
+                        <div class="alert alert-warning" style="margin: 1rem 0 0; padding: 1rem;">
+                            <div style="font-size: 0.85rem;">
+                                <strong>关键产出：</strong>模型效果报告 + Prompt版本库 + 评测结果分析
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>上线发布阶段</h4>
+                        <p><strong>核心任务：</strong>制定灰度策略，设计监控指标，建立bad case反馈机制。</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="tag tag-primary">灰度发布</span>
+                            <span class="tag tag-success">监控埋点</span>
+                            <span class="tag tag-danger">风险预案</span>
+                        </div>
+                        <div class="alert alert-warning" style="margin: 1rem 0 0; padding: 1rem;">
+                            <div style="font-size: 0.85rem;">
+                                <strong>关键产出：</strong>上线检查清单 + 监控Dashboard + 应急预案
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>迭代优化阶段</h4>
+                        <p><strong>核心任务：</strong>分析线上效果，收集bad case，推动模型迭代，构建数据飞轮。</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="tag tag-primary">效果分析</span>
+                            <span class="tag tag-warning">Bad case分析</span>
+                            <span class="tag tag-success">数据飞轮</span>
+                        </div>
+                        <div class="alert alert-warning" style="margin: 1rem 0 0; padding: 1rem;">
+                            <div style="font-size: 0.85rem;">
+                                <strong>关键产出：</strong>迭代优化计划 + 数据回流机制 + 下版本规划
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2.5rem 0 1.5rem; color: var(--dark);">与传统产品经理工作方式对比</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>工作内容</th>
+                            <th>传统方式</th>
+                            <th>AI产品方式</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PRD核心</strong></td>
+                            <td>功能逻辑、页面流程、交互细节</td>
+                            <td>Prompt设计 + 测试评估标准 + 能力边界定义</td>
+                        </tr>
+                        <tr>
+                            <td><strong>开发模式</strong></td>
+                            <td>线性流程，需求固定</td>
+                            <td>网状实验，多方案并行，快速迭代</td>
+                        </tr>
+                        <tr>
+                            <td><strong>项目管理</strong></td>
+                            <td>精确排期，里程碑控制</td>
+                            <td>实验驱动，"试到好为止"的迭代模式</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据驱动</strong></td>
+                            <td>DAU、留存、转化率分析</td>
+                            <td>准确率、召回率、F1值 + 数据飞轮设计</td>
+                        </tr>
+                        <tr>
+                            <td><strong>用户体验</strong></td>
+                            <td>界面设计、交互流程优化</td>
+                            <td>人机协作体验设计、AI能力边界沟通</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 第四章：Prompt工程 -->
+        <section class="section" id="prompt">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">Prompt工程：AI产品的核心竞争力</h2>
+                    <p class="section-subtitle">掌握与大模型有效交互的核心技巧</p>
+                </div>
+            </div>
+
+            <div class="quote">
+                <p>Prompt不是越长越好，简洁精准才是王道。成功的Prompt都是经过循环打磨出来的。</p>
+                <cite>—— Prompt Engineering实战指南</cite>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2rem 0 1.5rem; color: var(--dark);">Prompt四要素框架</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🎭</div>
+                    <h3>Role（角色）</h3>
+                    <p>激活模型特定领域的知识子空间。角色定义越精准，输出质量越高。</p>
+                    <div class="code-block" style="margin-top: 1rem; font-size: 0.8rem;">
+                        <span class="comment"># 推荐写法</span><br>
+                        <span class="keyword">你是一位</span>专注性能优化的<br>
+                        &nbsp;&nbsp;Java架构师，有10年经验<br><br>
+                        <span class="comment"># 不推荐写法</span><br>
+                        <span class="keyword">你是一个</span>AI助手
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Task（任务）</h3>
+                    <p>明确要完成的具体动作，使用动词开头，清晰表达目标。</p>
+                    <div class="code-block" style="margin-top: 1rem; font-size: 0.8rem;">
+                        <span class="comment"># 推荐写法</span><br>
+                        <span class="keyword">请评审</span>以下代码的性能问题<br>
+                        <span class="keyword">提取</span>文章中的关键论点<br><br>
+                        <span class="comment"># 不推荐写法</span><br>
+                        关于这个代码< span class="keyword">你说一下</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>Context（上下文）</h3>
+                    <p>提供任务相关的背景信息，帮助模型理解场景限制和前置条件。</p>
+                    <div class="code-block" style="margin-top: 1rem; font-size: 0.8rem;">
+                        <span class="comment"># 示例</span><br>
+                        当前线上QPS 2000<br>
+                        响应时间超过500ms<br>
+                        用户反馈卡顿严重
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📐</div>
+                    <h3>Format（格式）</h3>
+                    <p>指定输出的结构要求，JSON/XML/Markdown等，确保输出可解析。</p>
+                    <div class="code-block" style="margin-top: 1rem; font-size: 0.8rem;">
+                        <span class="comment"># 示例</span><br>
+                        输出JSON，包含<br>
+                        <span class="string">"title"</span>、<span class="string">"summary"</span><br>
+                        两个字段
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2.5rem 0 1.5rem; color: var(--dark);">六大Prompt核心技巧</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🧩</div>
+                    <div class="feature-content">
+                        <h4>1. 思维链（Chain-of-Thought）</h4>
+                        <p>要求模型展示推理过程，特别适用于复杂推理、数学计算、逻辑分析等场景。</p>
+                        <div class="code-block" style="margin-top: 0.75rem; font-size: 0.8rem;">
+                            在回答之前，先思考：1) 涉及哪些关键变量？ 2) 变量之间什么关系？ 3) 最终答案如何验证？
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-content">
+                        <h4>2. 少样本学习（Few-Shot）</h4>
+                        <p>提供1-3个高质量示例，比纯文字描述更有效。示例必须与实际任务同类型，覆盖主要边缘情况。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏗️</div>
+                    <div class="feature-content">
+                        <h4>3. 任务分解（Task Decomposition）</h4>
+                        <p>将复杂任务分解为多个子任务。可采用静态分解（流程固定）或动态分解（探索性任务），逐步调试优化。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-content">
+                        <h4>4. 结构化输出（Structured Output）</h4>
+                        <p>使用XML标签构建清晰层级，或使用模型原生支持的JSON Mode，确保输出格式稳定可解析。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔗</div>
+                    <div class="feature-content">
+                        <h4>5. 链式提示（Prompt Chaining）</h4>
+                        <p>将复杂任务分解为多个子任务，每个子任务有独立Prompt，使用标签在提示之间传递输出。</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-content">
+                        <h4>6. 预填充（Pre-filling）</h4>
+                        <p>在结尾加特定字符（如{），强制模型跳过前言直接进入正题，确保输出格式一致性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger" style="margin-top: 2rem;">
+                <div class="alert-icon" style="color: var(--danger);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 style="color: var(--danger);">Prompt注入攻击防护（重要）</h4>
+                    <p><strong>执行层：</strong>代码执行环境隔离，API Key严格受限，危险操作额外授权<br>
+                    <strong>认知层：</strong>区分System Prompt和User Input，使用分隔符包裹不可信数据<br>
+                    <strong>决策层：</strong>高危操作（修改数据库、发送邮件、转账）执行前触发人工审批</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第五章：评估体系 -->
+        <section class="section" id="evaluation">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">评估体系：构建AI产品的评价标准</h2>
+                    <p class="section-subtitle">建立科学的AI产品效果评估方法</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 1.5rem 0 1.5rem; color: var(--dark);">AI产品核心评估指标</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>准确率（Precision）</h3>
+                    <p>模型预测为正类的样本中，实际为正类的比例。高准确率意味着较少的误杀。</p>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: var(--gray-100); border-radius: 8px; font-size: 0.85rem;">
+                        <strong>公式：</strong>Precision = TP / (TP + FP)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3>召回率（Recall）</h3>
+                    <p>实际为正类的样本中，被模型正确预测的比例。高召回率意味着较少的漏网。</p>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: var(--gray-100); border-radius: 8px; font-size: 0.85rem;">
+                        <strong>公式：</strong>Recall = TP / (TP + FN)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚖️</div>
+                    <h3>F1 Score</h3>
+                    <p>准确率和召回率的调和平均数，在两者之间取得平衡。</p>
+                    <div style="margin-top: 1rem; padding: 0.75rem; background: var(--gray-100); border-radius: 8px; font-size: 0.85rem;">
+                        <strong>公式：</strong>F1 = 2 × Precision × Recall / (Precision + Recall)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>ROC-AUC</h3>
+                    <p>衡量模型在不同阈值下的分类能力，不受类别不平衡影响。</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2.5rem 0 1.5rem; color: var(--dark);">评估体系建设步骤</h3>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>制定评估标准（Baseline）</h4>
+                        <p>明确"好回答"的标准是什么，定义不同场景下的质量要求。这是最核心也是最困难的一步。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>构建评测集</h4>
+                        <p>收集数百至数千个真实场景问题，覆盖主要场景和边缘情况。评测集需要持续维护和更新。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>批量测试与结果分析</h4>
+                        <p>对模型进行批量测试，量化模型表现。持续给模型"出考卷"，监控模型效果变化。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>LLM-as-a-Judge</h4>
+                        <p>使用大模型作为"阅卷人"评估输出质量，提升评估效率。可结合人工复核确保准确性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-success" style="margin-top: 2rem;">
+                <div class="alert-icon" style="color: var(--success);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22,4 12,14.01 9,11.01"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 style="color: var(--success);">AI产品经理的价值：Trade-off决策</h4>
+                    <p>评估体系的核心目的是帮助做出决策：<br>
+                    • RAG vs 微调：哪个方案更适合当前场景？<br>
+                    • 速度 vs 准确率：在响应延迟和效果之间如何取舍？<br>
+                    • 通用模型 vs 专用模型：根据业务需求和成本进行权衡</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第六章：学习资源 -->
+        <section class="section" id="resources">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">学习资源：推荐书单与进阶路径</h2>
+                    <p class="section-subtitle">持续学习，成为顶尖AI产品经理</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 1.5rem 0 1.5rem; color: var(--dark);">推荐学习资源</h3>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📖</div>
+                        <div>
+                            <div class="resource-title">《AI产品经理修炼手册》</div>
+                        </div>
+                    </div>
+                    <p class="resource-desc">系统讲解AI产品从0到1的全流程，适合新人建立完整认知框架。</p>
+                    <div class="resource-tags">
+                        <span class="tag tag-primary">入门必读</span>
+                        <span class="tag tag-success">理论基础</span>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📖</div>
+                        <div>
+                            <div class="resource-title">《大模型应用开发极简入门》</div>
+                        </div>
+                    </div>
+                    <p class="resource-desc">快速掌握LLM开发的核心概念和实战技巧，理解技术边界。</p>
+                    <div class="resource-tags">
+                        <span class="tag tag-primary">技术入门</span>
+                        <span class="tag tag-warning">实操性强</span>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">🌐</div>
+                        <div>
+                            <div class="resource-title">人人都是产品经理</div>
+                        </div>
+                    </div>
+                    <p class="resource-desc">国内最专业的产品经理社区，AI产品相关高质量文章丰富。</p>
+                    <div class="resource-tags">
+                        <span class="tag tag-primary">行业资讯</span>
+                        <span class="tag tag-success">案例分析</span>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">🎓</div>
+                        <div>
+                            <div class="resource-title">Coursera - AI For Everyone</div>
+                        </div>
+                    </div>
+                    <p class="resource-desc">吴恩达开设的AI入门课程，建立对AI技术的正确认知。</p>
+                    <div class="resource-tags">
+                        <span class="tag tag-primary">视频课程</span>
+                        <span class="tag tag-success">英文</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2.5rem 0 1.5rem; color: var(--dark);">职业发展路径</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>阶段</th>
+                            <th>核心能力</th>
+                            <th>成长建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>入门期（0-1年）</strong></td>
+                            <td>掌握产品基础能力 + AI基本概念</td>
+                            <td>参与完整项目，积累实战经验；考取AWS/Azure ML认证</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成长期（1-3年）</strong></td>
+                            <td>Prompt工程 + 评估体系 + 跨团队协作</td>
+                            <td>主导AI产品从0到1；参与Kaggle比赛积累实战</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成熟期（3-5年）</strong></td>
+                            <td>技术深度 + 商业敏感度 + 战略思维</td>
+                            <td>深耕垂直行业；建立数据飞轮思维；提升商业洞察</td>
+                        </tr>
+                        <tr>
+                            <td><strong>专家期（5年+）</strong></td>
+                            <td>行业影响力 + 技术前沿洞察 + 团队建设</td>
+                            <td>输出行业方法论；参与行业标准制定</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert alert-warning" style="margin-top: 2rem;">
+                <div class="alert-icon" style="color: var(--warning);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 style="color: var(--warning);">新人常见误区</h4>
+                    <p>❌ <strong>过度承诺：</strong>避免在POC阶段承诺100%准确率<br>
+                    ❌ <strong>技术本位：</strong>警惕陷入纯算法优化而忽视用户体验<br>
+                    ❌ <strong>数据漠视：</strong>未建立持续数据闭环将导致模型衰减<br>
+                    ❌ <strong>功能堆砌：</strong>AI产品界面极简，体验核心在模型而非界面</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 附录 -->
+        <div class="appendix">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                附录：核心术语表
+            </h2>
+            <div class="glossary">
+                <div class="glossary-item">
+                    <div class="glossary-term">LLM (Large Language Model)</div>
+                    <div class="glossary-def">大语言模型，能够理解和生成人类语言的大型神经网络模型。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Prompt</div>
+                    <div class="glossary-def">提示词，用户向AI模型输入的指令或问题，是与AI交互的核心界面。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">RAG (Retrieval-Augmented Generation)</div>
+                    <div class="glossary-def">检索增强生成，结合外部知识库检索与LLM生成的混合架构。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Fine-tuning</div>
+                    <div class="glossary-def">微调，在预训练模型基础上使用特定数据进行调整优化。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">幻觉 (Hallucination)</div>
+                    <div class="glossary-def">AI模型生成看似正确但实际错误或虚构的内容。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">数据飞轮</div>
+                    <div class="glossary-def">通过用户行为数据持续优化模型，形成正向循环的系统。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Baseline</div>
+                    <div class="glossary-def">基准线，作为比较基准的初始模型效果，用于衡量改进效果。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Bad Case</div>
+                    <div class="glossary-def">模型表现不佳的具体案例，是模型优化的重要输入。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>AI产品经理新人培训资料 · 2026年版 · 内部培训使用</p>
+        </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18,15 12,9 6,15"/>
+        </svg>
+    </button>
+
+    <script>
+        // 阅读进度
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressFill').style.width = scrolled + '%';
+
+            // 回到顶部按钮显示/隐藏
+            const backToTop = document.getElementById('backToTop');
+            if (winScroll > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+
+            // 更新导航高亮
+            updateNavHighlight();
+        });
+
+        // 导航高亮
+        function updateNavHighlight() {
+            const sections = document.querySelectorAll('.section, .toc');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // 平滑滚动
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 目录点击
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
