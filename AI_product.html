@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>市面主流 AI 产品简介</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --accent: #7c3aed;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(37, 99, 235, .10), transparent 26rem),
+        radial-gradient(circle at 90% 5%, rgba(124, 58, 237, .10), transparent 28rem),
+        var(--bg);
+      line-height: 1.78;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    aside {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(229,231,235,.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+    }
+    aside h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #111827;
+    }
+    .toc a {
+      display: block;
+      color: #4b5563;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 7px 9px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .toc a:hover { background: var(--primary-soft); color: var(--primary); }
+    .toc .toc-h3 { padding-left: 22px; font-size: 13px; color: #6b7280; }
+    main {
+      min-width: 0;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(229,231,235,.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero {
+      padding: 54px 58px 42px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.95), rgba(124,58,237,.92)),
+        radial-gradient(circle at 70% 20%, rgba(255,255,255,.25), transparent 20rem);
+    }
+    .hero h1 { margin: 0 0 12px; font-size: clamp(30px, 4vw, 48px); line-height: 1.18; }
+    .hero p { margin: 0; color: rgba(255,255,255,.88); max-width: 820px; }
+    .content { padding: 42px 58px 64px; }
+    h1 { display: none; }
+    h2 {
+      margin-top: 52px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 28px;
+      line-height: 1.3;
+      color: #111827;
+    }
+    h2:first-child { margin-top: 0; border-top: 0; }
+    h3 { margin-top: 32px; font-size: 20px; color: #1f2937; }
+    p { margin: 12px 0; }
+    blockquote {
+      margin: 0 0 28px;
+      padding: 18px 22px;
+      border-left: 5px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 14px;
+      color: #374151;
+    }
+    blockquote p { margin: 6px 0; }
+    hr { border: 0; height: 1px; background: var(--line); margin: 36px 0; }
+    ul, ol { padding-left: 1.4em; }
+    li { margin: 6px 0; }
+    strong { color: #111827; }
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92em;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 30px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f9fafb;
+      color: #111827;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fcfcfd; }
+    tr:last-child td { border-bottom: 0; }
+    .top-link {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      display: inline-flex;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 14px; }
+      aside { position: relative; top: auto; max-height: none; margin-bottom: 16px; }
+      .hero { padding: 34px 24px; }
+      .content { padding: 28px 22px 44px; }
+      h2 { font-size: 23px; }
+      table { min-width: 720px; }
+    }
+    @media print {
+      body { background: white; }
+      aside, .top-link { display: none; }
+      .layout { display: block; padding: 0; }
+      main { box-shadow: none; border: 0; }
+      .hero { color: #111827; background: white; border-bottom: 2px solid #111827; }
+      .content { padding: 24px; }
+    }
+  </style>
+</head>
+<body id="top">
+  <div class="layout">
+    <aside>
+      <h2>目录</h2>
+      <nav class="toc">
+        <a class="toc-h2" href="#一-通用-ai-助手---聊天类">一、通用 AI 助手 / 聊天类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#二-ai-搜索---研究类">二、AI 搜索 / 研究类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#三-ai-办公---效率类">三、AI 办公 / 效率类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#四-ai-编程---开发类">四、AI 编程 / 开发类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#五-ai-图像---设计类">五、AI 图像 / 设计类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#六-ai-视频---数字人类">六、AI 视频 / 数字人类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#七-ai-音频---语音---音乐类">七、AI 音频 / 语音 / 音乐类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#八-ai-agent---自动化类">八、AI Agent / 自动化类</a>
+<a class="toc-h3" href="#代表产品">代表产品</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#九-垂直行业-ai-产品">九、垂直行业 AI 产品</a>
+<a class="toc-h3" href="#主要方向">主要方向</a>
+<a class="toc-h3" href="#产品特点">产品特点</a>
+<a class="toc-h2" href="#十-按照竞品分析方式的赛道划分建议">十、按照竞品分析方式的赛道划分建议</a>
+<a class="toc-h3" href="#1--通用-ai-助手赛道">1. 通用 AI 助手赛道</a>
+<a class="toc-h3" href="#2--ai-搜索---研究赛道">2. AI 搜索 / 研究赛道</a>
+<a class="toc-h3" href="#3--ai-编程赛道">3. AI 编程赛道</a>
+<a class="toc-h3" href="#4--ai-视频生成赛道">4. AI 视频生成赛道</a>
+<a class="toc-h3" href="#5--ai-办公赛道">5. AI 办公赛道</a>
+<a class="toc-h2" href="#十一-产品分析时可以使用的通用框架">十一、产品分析时可以使用的通用框架</a>
+<a class="toc-h3" href="#1--用户与场景">1. 用户与场景</a>
+<a class="toc-h3" href="#2--核心能力">2. 核心能力</a>
+<a class="toc-h3" href="#3--产品体验">3. 产品体验</a>
+<a class="toc-h3" href="#4--商业模式">4. 商业模式</a>
+<a class="toc-h3" href="#5--竞争壁垒">5. 竞争壁垒</a>
+<a class="toc-h2" href="#十二-整体趋势总结">十二、整体趋势总结</a>
+<a class="toc-h2" href="#十三-一句话总结">十三、一句话总结</a>
+      </nav>
+    </aside>
+    <main>
+      <section class="hero">
+        <h1>市面主流 AI 产品简介</h1>
+        <p>按使用场景梳理通用 AI 助手、AI 搜索、AI 办公、AI 编程、AI 图像、AI 视频、AI 音频、Agent 自动化和垂直行业 AI 产品，适合产品分析、竞品分析和行业研究使用。</p>
+      </section>
+      <article class="content">
+        <h1 id="市面主流-ai-产品简介">市面主流 AI 产品简介</h1>
+<blockquote>
+<p>更新时间：2026-05-25</p>
+<p>说明：本文按产品使用场景对当前市面上的主流 AI 产品进行分类梳理，适合作为产品分析、竞品分析、行业研究或选题调研的基础资料。</p>
+</blockquote>
+<hr>
+<h2 id="一-通用-ai-助手---聊天类">一、通用 AI 助手 / 聊天类</h2>
+<p>通用 AI 助手是目前用户认知度最高、覆盖面最广的一类 AI 产品。它们通常具备问答、写作、总结、翻译、代码生成、图片理解、文件分析、联网搜索、多模态交互等能力。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>所属公司/机构</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>ChatGPT</td><td>OpenAI</td><td>全球代表性的通用 AI 助手，支持文本、图片、语音、文件、代码、数据分析、搜索、深度研究等能力。</td><td>问答、写作、学习、办公、编程、研究</td></tr>
+<tr><td>Claude</td><td>Anthropic</td><td>强调长文本理解、复杂推理、写作和代码能力，适合文档处理、研究、编程和企业场景。</td><td>长文档分析、写作、代码、研究</td></tr>
+<tr><td>Gemini</td><td>Google</td><td>Google 旗下 AI 助手，深度结合 Google 搜索、Gmail、Docs、Drive、YouTube 等生态。</td><td>搜索、办公、学习、多模态问答</td></tr>
+<tr><td>Perplexity</td><td>Perplexity AI</td><td>偏 AI 搜索和答案引擎，强调联网检索、来源引用和研究型问答。</td><td>信息检索、资料调研、快速了解话题</td></tr>
+<tr><td>Microsoft Copilot</td><td>Microsoft</td><td>微软 AI 助手，覆盖 Windows、Edge、Bing、Microsoft 365 等生态。</td><td>办公、搜索、企业协作、系统级助手</td></tr>
+<tr><td>DeepSeek</td><td>深度求索</td><td>国内关注度较高的 AI 助手和大模型产品，提供 Chat、App、API 等入口。</td><td>问答、写作、代码、学习</td></tr>
+<tr><td>Kimi</td><td>月之暗面</td><td>主打长上下文、长文档阅读、资料总结和研究场景。</td><td>文档阅读、论文分析、报告生成</td></tr>
+<tr><td>通义千问 / Qwen</td><td>阿里巴巴</td><td>阿里旗下通用 AI 助手与模型体系，覆盖个人助手、开发者、企业应用等。</td><td>问答、办公、代码、企业服务</td></tr>
+<tr><td>豆包</td><td>字节跳动</td><td>字节旗下 AI 助手，覆盖聊天、写作、搜索、图片、语音、学习和手机助手等方向。</td><td>日常问答、内容创作、学习、语音交互</td></tr>
+<tr><td>文心 / 文小言</td><td>百度</td><td>百度旗下生成式 AI 助手，结合百度搜索、内容生态和大模型能力。</td><td>搜索问答、写作、办公、创作</td></tr>
+<tr><td>讯飞星火</td><td>科大讯飞</td><td>强调语音、教育、办公、多模态和行业应用。</td><td>语音交互、学习、办公、翻译</td></tr>
+<tr><td>智谱清言</td><td>智谱 AI</td><td>基于 GLM 系列模型的 AI 助手，覆盖通用问答、写作、代码和智能体。</td><td>问答、写作、办公、智能体</td></tr>
+<tr><td>海螺 AI</td><td>MiniMax</td><td>MiniMax 旗下 AI 助手产品，覆盖文本、语音、视频等生成能力。</td><td>对话、创作、语音、视频</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>用户入口简单，通常以聊天框为核心交互。</li>
+<li>能力边界不断扩展，从“回答问题”走向“帮用户完成任务”。</li>
+<li>竞争重点包括模型能力、响应速度、上下文长度、多模态能力、生态整合、工具调用和价格。</li>
+</ul>
+<hr>
+<h2 id="二-ai-搜索---研究类">二、AI 搜索 / 研究类</h2>
+<p>AI 搜索和研究类产品主要解决“找资料、读资料、整理资料、生成报告”的问题。相比传统搜索引擎，它们更强调结果整合、引用来源、结构化输出和深度分析。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>Perplexity</td><td>AI 答案引擎，提供联网搜索、来源引用和追问能力。</td><td>快速调研、资料检索、新闻追踪</td></tr>
+<tr><td>ChatGPT Search / Deep Research</td><td>支持联网搜索、多网页阅读和研究报告生成。</td><td>行业研究、竞品调研、复杂问题分析</td></tr>
+<tr><td>Gemini Deep Research</td><td>Google 生态内的深度研究能力，适合多来源资料整合。</td><td>学术研究、市场调研、信息梳理</td></tr>
+<tr><td>Kimi 深度研究</td><td>中文语境下的长文档阅读和研究总结能力较突出。</td><td>中文资料整理、报告撰写、论文阅读</td></tr>
+<tr><td>秘塔 AI 搜索</td><td>国内 AI 搜索产品，强调中文搜索、结构化总结和资料来源。</td><td>中文互联网信息检索、资料汇总</td></tr>
+<tr><td>NotebookLM</td><td>Google 的资料型 AI 笔记产品，可基于用户上传资料进行问答、总结和音频概览。</td><td>学习、读书、论文研究、知识库问答</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>核心价值不是“聊天”，而是“可信地找到答案”。</li>
+<li>对信息源质量、引用透明度、检索覆盖面要求较高。</li>
+<li>适合做竞品分析、行业研究、论文阅读、知识管理等场景。</li>
+</ul>
+<hr>
+<h2 id="三-ai-办公---效率类">三、AI 办公 / 效率类</h2>
+<p>AI 办公产品通常嵌入文档、表格、PPT、邮件、会议、知识库和协同工具中，帮助用户提升办公效率。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>所属公司</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>Microsoft 365 Copilot</td><td>Microsoft</td><td>深度集成 Word、Excel、PowerPoint、Outlook、Teams 等办公软件。</td><td>写文档、做 PPT、邮件总结、会议纪要</td></tr>
+<tr><td>Google Workspace Gemini</td><td>Google</td><td>集成 Gmail、Docs、Sheets、Slides、Meet、Drive 等 Google 办公生态。</td><td>邮件、文档、会议、资料整理</td></tr>
+<tr><td>Notion AI</td><td>Notion</td><td>嵌入 Notion 文档和知识库，支持写作、总结、问答和项目协作。</td><td>笔记、项目管理、知识库</td></tr>
+<tr><td>飞书智能伙伴 / 飞书 AI</td><td>字节跳动</td><td>嵌入飞书文档、会议、IM、知识库和企业协作场景。</td><td>企业办公、会议纪要、知识问答</td></tr>
+<tr><td>钉钉 AI 助理</td><td>阿里巴巴</td><td>面向企业协同、审批、知识库、客服和业务流程。</td><td>企业管理、流程自动化、内部问答</td></tr>
+<tr><td>WPS AI</td><td>金山办公</td><td>嵌入 WPS 文档、表格、PPT、PDF 等办公工具。</td><td>文档写作、PPT 生成、表格处理</td></tr>
+<tr><td>Grammarly</td><td>Grammarly</td><td>英文写作辅助工具，支持语法纠错、语气调整、改写和 AI 写作。</td><td>英文邮件、论文、商务写作</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>AI 能力通常不是单独存在，而是嵌入现有工作流。</li>
+<li>价值重点在于减少重复劳动、提升文档质量、降低沟通成本。</li>
+<li>企业场景更关注数据安全、权限管理、私有化部署和系统集成。</li>
+</ul>
+<hr>
+<h2 id="四-ai-编程---开发类">四、AI 编程 / 开发类</h2>
+<p>AI 编程类产品是商业化较成熟的 AI 方向之一，主要服务程序员、技术团队、独立开发者和低代码/无代码用户。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>GitHub Copilot</td><td>GitHub 和 OpenAI 合作推出的 AI 编程助手，支持代码补全、聊天、代码解释和 Agent 能力。</td><td>IDE 编程、代码补全、代码审查</td></tr>
+<tr><td>Cursor</td><td>AI 原生代码编辑器，支持理解代码库、自然语言改代码、生成和重构代码。</td><td>项目开发、代码重构、快速原型</td></tr>
+<tr><td>Claude Code</td><td>Anthropic 推出的开发者工具，偏命令行和项目级代码协作。</td><td>项目修改、代码理解、自动化开发</td></tr>
+<tr><td>OpenAI Codex / ChatGPT coding</td><td>OpenAI 代码能力体系，可用于代码生成、解释、调试和项目修改。</td><td>编程问答、脚本生成、项目开发</td></tr>
+<tr><td>Windsurf</td><td>AI IDE，强调 Agent 式开发体验。</td><td>代码生成、项目级开发、重构</td></tr>
+<tr><td>Replit Agent</td><td>Replit 的 AI 开发助手，可从自然语言需求生成应用原型并部署。</td><td>独立开发、原型验证、在线开发</td></tr>
+<tr><td>Trae</td><td>字节系 AI IDE，面向中文开发者和 AI 编程场景。</td><td>AI 辅助编码、项目开发</td></tr>
+<tr><td>Codeium / Tabnine</td><td>面向开发者和企业的代码补全及编程助手。</td><td>企业代码补全、私有化开发环境</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>从“代码补全”发展到“理解项目并执行开发任务”。</li>
+<li>竞争重点包括代码库理解能力、编辑准确率、工具调用、上下文窗口、IDE 体验和企业安全。</li>
+<li>未来趋势是从 Copilot 走向 Coding Agent。</li>
+</ul>
+<hr>
+<h2 id="五-ai-图像---设计类">五、AI 图像 / 设计类</h2>
+<p>AI 图像和设计类产品主要服务设计师、插画师、电商运营、广告创意、品牌营销和普通内容创作者。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>Midjourney</td><td>高质量 AI 图像生成工具，擅长艺术风格、创意视觉和概念图。</td><td>插画、海报、概念设计、视觉创意</td></tr>
+<tr><td>Adobe Firefly</td><td>Adobe 旗下生成式 AI 创意工具，集成 Photoshop、Illustrator、Express 等产品。</td><td>商业设计、图片编辑、创意素材生成</td></tr>
+<tr><td>Canva Magic Studio</td><td>Canva 的 AI 设计套件，面向非专业设计用户。</td><td>海报、社媒图、营销物料、PPT</td></tr>
+<tr><td>ChatGPT 图像生成</td><td>OpenAI 的图像生成和编辑能力，可结合对话完成创意设计。</td><td>文生图、图像修改、创意草图</td></tr>
+<tr><td>Gemini 图像生成</td><td>Google Gemini 中的图像生成和多模态创作能力。</td><td>图片生成、创意表达、视觉辅助</td></tr>
+<tr><td>Stable Diffusion / ComfyUI</td><td>开源图像生成生态，支持本地部署和高度可控工作流。</td><td>专业图像生成、模型微调、工作流搭建</td></tr>
+<tr><td>Leonardo AI</td><td>面向游戏、美术、素材和设计创作的 AI 图像产品。</td><td>游戏资产、角色设计、场景图</td></tr>
+<tr><td>Ideogram</td><td>擅长文字海报、Logo 和图文结合的 AI 图像生成。</td><td>Logo、海报、字体设计</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>主要价值是降低视觉创作门槛、提升出图效率。</li>
+<li>专业用户关注可控性、风格一致性、版权合规和商业可用性。</li>
+<li>电商、广告和短视频行业是重要应用场景。</li>
+</ul>
+<hr>
+<h2 id="六-ai-视频---数字人类">六、AI 视频 / 数字人类</h2>
+<p>AI 视频和数字人产品正在快速发展，主要用于短视频、广告、培训、影视前期、动画、口播和虚拟人内容。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>Runway</td><td>AI 视频生成和编辑平台，提供文生视频、图生视频、视频编辑等能力。</td><td>广告片、影视创意、视频素材</td></tr>
+<tr><td>Pika</td><td>AI 视频生成工具，适合短视频、动画和创意效果。</td><td>短视频、创意动效、社媒内容</td></tr>
+<tr><td>Kling / 可灵</td><td>快手旗下视频生成产品，支持文生视频、图生视频等能力。</td><td>中文视频生成、广告、短片</td></tr>
+<tr><td>Luma Dream Machine</td><td>Luma AI 的视频生成产品，强调镜头运动和视觉质量。</td><td>镜头设计、短片生成、视觉实验</td></tr>
+<tr><td>Hailuo AI / 海螺</td><td>MiniMax 旗下视频和多模态生成产品。</td><td>视频生成、内容创作</td></tr>
+<tr><td>Synthesia</td><td>企业级 AI 数字人视频平台，可用文本生成培训、解说和企业视频。</td><td>培训视频、企业宣传、课程制作</td></tr>
+<tr><td>HeyGen</td><td>AI 数字人和视频翻译产品，适合口播、营销和跨语言传播。</td><td>数字人口播、视频翻译、营销视频</td></tr>
+<tr><td>D-ID</td><td>数字人头像和口播视频生成产品。</td><td>虚拟主播、头像口播、客服视频</td></tr>
+<tr><td>剪映 / CapCut AI</td><td>剪辑工具中的 AI 能力，包括字幕、配音、素材生成和智能剪辑。</td><td>短视频剪辑、带货视频、社媒内容</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>生产效率提升明显，但质量稳定性和可控性仍是核心问题。</li>
+<li>商业场景更关注镜头一致性、人物一致性、版权风险和生成成本。</li>
+<li>数字人产品在培训、营销、客服和跨语言传播中落地较快。</li>
+</ul>
+<hr>
+<h2 id="七-ai-音频---语音---音乐类">七、AI 音频 / 语音 / 音乐类</h2>
+<p>AI 音频类产品覆盖语音识别、语音合成、声音克隆、翻译配音、播客生成和音乐生成。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>ElevenLabs</td><td>AI 语音生成和声音克隆产品，支持多语言配音。</td><td>配音、有声书、短视频旁白、游戏语音</td></tr>
+<tr><td>Suno</td><td>AI 音乐生成产品，可根据提示词生成歌曲。</td><td>音乐创作、短视频配乐、Demo 制作</td></tr>
+<tr><td>Udio</td><td>AI 歌曲生成产品，面向音乐创作和娱乐内容。</td><td>歌曲生成、创意音乐、内容配乐</td></tr>
+<tr><td>讯飞语音 / 讯飞星火</td><td>科大讯飞在语音识别、合成、同传和教育语音场景积累较深。</td><td>语音识别、会议转写、翻译、教育</td></tr>
+<tr><td>豆包语音大模型</td><td>字节旗下语音能力，覆盖识别、合成、声音复刻和播客生成。</td><td>语音助手、配音、播客、实时语音</td></tr>
+<tr><td>Adobe Podcast</td><td>Adobe 音频增强和播客处理工具。</td><td>录音优化、播客制作、音频降噪</td></tr>
+<tr><td>Descript</td><td>音视频编辑工具，可通过编辑文字来剪辑音频和视频。</td><td>播客剪辑、采访整理、视频编辑</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>语音识别和转写已较成熟，声音克隆和音乐生成增长迅速。</li>
+<li>关键问题包括音色自然度、情绪表达、版权、声音授权和滥用风险。</li>
+<li>短视频、播客、教育、客服、游戏是典型应用场景。</li>
+</ul>
+<hr>
+<h2 id="八-ai-agent---自动化类">八、AI Agent / 自动化类</h2>
+<p>AI Agent 类产品的核心不是简单回答，而是“帮助用户完成任务”。它们通常具备工具调用、网页操作、文件处理、流程自动化、代码执行、任务规划等能力。</p>
+<h3 id="代表产品">代表产品</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>产品</th><th>简介</th><th>典型场景</th></tr></thead><tbody>
+<tr><td>ChatGPT Agent / Operator 类能力</td><td>通过浏览器、工具和任务规划帮助用户执行复杂任务。</td><td>订票、调研、填表、网页操作、自动化任务</td></tr>
+<tr><td>Microsoft Copilot Agents</td><td>面向企业流程和业务场景的 AI Agent。</td><td>企业流程自动化、知识问答、业务助手</td></tr>
+<tr><td>Gemini Gems / Agent 能力</td><td>Google Gemini 中的个性化助手和跨应用任务能力。</td><td>个性化助理、Google 应用协作</td></tr>
+<tr><td>Manus</td><td>通用 AI Agent 产品，强调任务执行和多步骤自动化。</td><td>资料整理、网站生成、任务执行</td></tr>
+<tr><td>Zapier AI</td><td>将 AI 与自动化流程结合，连接各种 SaaS 工具。</td><td>自动化办公、邮件处理、数据同步</td></tr>
+<tr><td>Make AI</td><td>工作流自动化平台中的 AI 能力。</td><td>业务流程编排、自动化集成</td></tr>
+<tr><td>Dify</td><td>开源 AI 应用和 Agent 搭建平台。</td><td>企业 AI 应用、知识库问答、工作流编排</td></tr>
+<tr><td>Coze / 扣子</td><td>字节旗下智能体搭建平台，支持插件、工作流和机器人发布。</td><td>智能体创建、客服机器人、内容助手</td></tr>
+<tr><td>LangChain / LangGraph</td><td>面向开发者的 Agent 框架和工作流编排工具。</td><td>AI 应用开发、工具调用、Agent 编排</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>从“对话式 AI”走向“执行式 AI”。</li>
+<li>产品体验取决于任务完成率、可控性、权限管理、失败兜底和工具生态。</li>
+<li>企业应用中，Agent 更适合与 CRM、ERP、知识库、工单系统、数据平台结合。</li>
+</ul>
+<hr>
+<h2 id="九-垂直行业-ai-产品">九、垂直行业 AI 产品</h2>
+<p>垂直行业 AI 产品通常不是独立聊天机器人，而是嵌入具体业务流程中，解决某个行业的高频问题。</p>
+<h3 id="主要方向">主要方向</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>行业</th><th>AI 产品方向</th><th>典型能力</th></tr></thead><tbody>
+<tr><td>教育</td><td>AI 家教、口语陪练、作文批改、题目讲解</td><td>个性化教学、错题分析、答疑、学习规划</td></tr>
+<tr><td>医疗</td><td>问诊辅助、病历生成、影像辅助、药物研发</td><td>医学问答、病历结构化、影像识别、研发辅助</td></tr>
+<tr><td>法律</td><td>合同审查、法规检索、案例分析</td><td>法条检索、合同风险识别、法律文书生成</td></tr>
+<tr><td>金融</td><td>投研助手、研报生成、风控、客服</td><td>数据分析、报告生成、风险提示、客户服务</td></tr>
+<tr><td>电商</td><td>商品图生成、标题优化、客服、直播脚本</td><td>素材生成、智能客服、营销文案、转化优化</td></tr>
+<tr><td>客服</td><td>智能客服、智能外呼、知识库问答</td><td>自动回复、工单分类、语音外呼、情绪识别</td></tr>
+<tr><td>HR</td><td>简历筛选、面试辅助、员工培训</td><td>候选人匹配、面试题生成、培训内容生成</td></tr>
+<tr><td>设计 / 建筑</td><td>空间设计、渲染、方案生成</td><td>效果图生成、空间布局、设计方案辅助</td></tr>
+<tr><td>游戏</td><td>NPC 对话、剧情生成、美术资产生成</td><td>角色对话、关卡设计、道具和场景素材</td></tr>
+<tr><td>汽车 / 硬件</td><td>车载语音助手、手机 AI 助手、机器人控制</td><td>多模态交互、设备控制、出行助手</td></tr>
+</tbody></table></div>
+<h3 id="产品特点">产品特点</h3>
+<ul>
+<li>行业数据和业务流程比通用模型能力更重要。</li>
+<li>落地难点通常在数据质量、业务闭环、合规要求和组织流程改造。</li>
+<li>更容易产生商业价值，但也更依赖行业 know-how。</li>
+</ul>
+<hr>
+<h2 id="十-按照竞品分析方式的赛道划分建议">十、按照竞品分析方式的赛道划分建议</h2>
+<p>如果要做产品分析或竞品分析，不建议把所有 AI 产品混在一起分析，而应该先确定具体赛道和用户场景。</p>
+<h3 id="1--通用-ai-助手赛道">1. 通用 AI 助手赛道</h3>
+<p>可重点比较：</p>
+<ul>
+<li>ChatGPT</li>
+<li>Claude</li>
+<li>Gemini</li>
+<li>Perplexity</li>
+<li>DeepSeek</li>
+<li>Kimi</li>
+<li>豆包</li>
+<li>通义千问</li>
+<li>文心 / 文小言</li>
+<li>讯飞星火</li>
+<li>智谱清言</li>
+</ul>
+<p>重点分析维度：</p>
+<ul>
+<li>模型能力</li>
+<li>搜索能力</li>
+<li>长上下文能力</li>
+<li>多模态能力</li>
+<li>文件处理能力</li>
+<li>语音交互能力</li>
+<li>免费额度和付费价格</li>
+<li>移动端体验</li>
+<li>生态整合能力</li>
+</ul>
+<h3 id="2--ai-搜索---研究赛道">2. AI 搜索 / 研究赛道</h3>
+<p>可重点比较：</p>
+<ul>
+<li>Perplexity</li>
+<li>ChatGPT Deep Research</li>
+<li>Gemini Deep Research</li>
+<li>Kimi</li>
+<li>秘塔 AI 搜索</li>
+<li>NotebookLM</li>
+</ul>
+<p>重点分析维度：</p>
+<ul>
+<li>搜索结果质量</li>
+<li>来源引用可信度</li>
+<li>中文资料覆盖</li>
+<li>长文档处理</li>
+<li>研究报告质量</li>
+<li>追问体验</li>
+<li>输出结构化程度</li>
+</ul>
+<h3 id="3--ai-编程赛道">3. AI 编程赛道</h3>
+<p>可重点比较：</p>
+<ul>
+<li>GitHub Copilot</li>
+<li>Cursor</li>
+<li>Claude Code</li>
+<li>OpenAI Codex / ChatGPT coding</li>
+<li>Windsurf</li>
+<li>Replit Agent</li>
+<li>Trae</li>
+</ul>
+<p>重点分析维度：</p>
+<ul>
+<li>代码补全质量</li>
+<li>项目理解能力</li>
+<li>多文件修改能力</li>
+<li>Bug 修复能力</li>
+<li>IDE 体验</li>
+<li>Agent 执行能力</li>
+<li>企业安全和私有化能力</li>
+</ul>
+<h3 id="4--ai-视频生成赛道">4. AI 视频生成赛道</h3>
+<p>可重点比较：</p>
+<ul>
+<li>Runway</li>
+<li>Kling / 可灵</li>
+<li>Pika</li>
+<li>Luma Dream Machine</li>
+<li>Hailuo AI</li>
+<li>Synthesia</li>
+<li>HeyGen</li>
+<li>剪映 AI</li>
+</ul>
+<p>重点分析维度：</p>
+<ul>
+<li>视频质量</li>
+<li>时长限制</li>
+<li>镜头稳定性</li>
+<li>人物一致性</li>
+<li>文生视频能力</li>
+<li>图生视频能力</li>
+<li>商业版权</li>
+<li>生成速度和价格</li>
+</ul>
+<h3 id="5--ai-办公赛道">5. AI 办公赛道</h3>
+<p>可重点比较：</p>
+<ul>
+<li>Microsoft 365 Copilot</li>
+<li>Google Workspace Gemini</li>
+<li>Notion AI</li>
+<li>飞书 AI</li>
+<li>钉钉 AI</li>
+<li>WPS AI</li>
+<li>Grammarly</li>
+</ul>
+<p>重点分析维度：</p>
+<ul>
+<li>文档生成能力</li>
+<li>表格分析能力</li>
+<li>PPT 生成能力</li>
+<li>邮件处理能力</li>
+<li>会议纪要能力</li>
+<li>企业知识库问答</li>
+<li>权限和安全</li>
+<li>与原办公流程融合程度</li>
+</ul>
+<hr>
+<h2 id="十一-产品分析时可以使用的通用框架">十一、产品分析时可以使用的通用框架</h2>
+<p>分析一个 AI 产品时，可以从以下问题切入：</p>
+<h3 id="1--用户与场景">1. 用户与场景</h3>
+<ul>
+<li>目标用户是谁？</li>
+<li>用户在什么场景下会打开这个产品？</li>
+<li>这个场景是高频还是低频？</li>
+<li>用户不用它会有什么损失？</li>
+<li>它解决的是“效率问题”“质量问题”还是“成本问题”？</li>
+</ul>
+<h3 id="2--核心能力">2. 核心能力</h3>
+<ul>
+<li>产品主要依赖哪些 AI 能力？</li>
+<li>文本生成</li>
+<li>搜索增强</li>
+<li>多模态理解</li>
+<li>图像生成</li>
+<li>视频生成</li>
+<li>语音合成</li>
+<li>工具调用</li>
+<li>Agent 自动化</li>
+<li>这些能力是否足够稳定？</li>
+<li>输出结果是否可控、可信、可复用？</li>
+</ul>
+<h3 id="3--产品体验">3. 产品体验</h3>
+<ul>
+<li>入口是否清晰？</li>
+<li>用户是否知道该怎么提问或下指令？</li>
+<li>结果是否容易修改？</li>
+<li>是否能融入用户已有工作流？</li>
+<li>是否有模板、历史记录、知识库、插件或工作流？</li>
+</ul>
+<h3 id="4--商业模式">4. 商业模式</h3>
+<ul>
+<li>免费版解决什么问题？</li>
+<li>付费版提供什么差异化能力？</li>
+<li>收费方式是订阅、按量、企业授权还是 API 调用？</li>
+<li>是否具备高频使用和续费价值？</li>
+</ul>
+<h3 id="5--竞争壁垒">5. 竞争壁垒</h3>
+<ul>
+<li>模型能力是否领先？</li>
+<li>是否有独家数据或生态入口？</li>
+<li>是否与用户工作流深度绑定？</li>
+<li>是否具备品牌认知和用户习惯？</li>
+<li>是否有企业客户、渠道或行业资源？</li>
+</ul>
+<hr>
+<h2 id="十二-整体趋势总结">十二、整体趋势总结</h2>
+<p>当前 AI 产品市场呈现出几个明显趋势：</p>
+<ol>
+<li><strong>从聊天助手走向任务助手</strong></li>
+</ol>
+<p>早期 AI 产品以问答和内容生成为主，现在越来越多产品开始强调 Agent、工具调用和任务执行。</p>
+<ol>
+<li><strong>从通用能力走向垂直场景</strong></li>
+</ol>
+<p>通用大模型能力趋同后，产品竞争会更多发生在办公、编程、视频、教育、客服、营销等具体场景。</p>
+<ol>
+<li><strong>从单点工具走向工作流嵌入</strong></li>
+</ol>
+<p>用户不希望为了 AI 额外打开一个工具，而是希望 AI 出现在 Word、Excel、IDE、浏览器、CRM、剪辑软件等原有流程中。</p>
+<ol>
+<li><strong>从生成内容走向可控生产</strong></li>
+</ol>
+<p>专业用户不仅要“能生成”，还要可编辑、可复用、可追溯、可控风格、可保障版权。</p>
+<ol>
+<li><strong>从个人效率走向企业自动化</strong></li>
+</ol>
+<p>企业更关心 AI 能否接入内部数据、遵守权限体系、自动处理流程并产生可量化收益。</p>
+<ol>
+<li><strong>从模型竞争走向产品体验竞争</strong></li>
+</ol>
+<p>模型很重要，但最终用户感知到的是：能不能解决问题、是否好用、是否稳定、是否值得付费。</p>
+<hr>
+<h2 id="十三-一句话总结">十三、一句话总结</h2>
+<p>现在市面上的 AI 产品可以概括为九大类：</p>
+<ol>
+<li>通用 AI 助手</li>
+<li>AI 搜索 / 研究</li>
+<li>AI 办公 / 效率</li>
+<li>AI 编程 / 开发</li>
+<li>AI 图像 / 设计</li>
+<li>AI 视频 / 数字人</li>
+<li>AI 音频 / 语音 / 音乐</li>
+<li>AI Agent / 自动化</li>
+<li>垂直行业 AI</li>
+</ol>
+<p>真正做产品分析或竞品分析时，关键不是罗列所有 AI 产品，而是找到具体用户场景：用户在什么时候需要它、为什么要用它、它比原有方案好在哪里，以及它是否能成为某个高频场景中的“非用不可”。</p>
+      </article>
+    </main>
+  </div>
+  <a class="top-link" href="#top" aria-label="返回顶部">↑</a>
+</body>
+</html>
