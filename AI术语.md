@@ -20,7 +20,10 @@
 
 ## 4、RAG (Retrieval-Augmented Generation) 检索增强生成
 ### 核心流程
-文档切段做Embedding存入向量数据库 → 用户问题也转成Embedding → 在向量库中检索语义最相似的文档段 → 把检索到的段落拼进Prompt让模型生成回答
+文档切段做Embedding存入向量数据库 → 用户问题也转成Embedding → 在向量库中检索语义最相似的文档段 → 把检索到的段落拼进Prompt让模型生成回答  
+文档 → 清洗 → Chunk切分 → Embedding → 向量/关键词索引  
+用户问题 → Query Embedding/关键词解析 → Retrieval召回chunks  
+Retrieval召回chunks + 用户问题 + System Prompt → LLM → 答案
 
 ## 5、Fine-tunning 微调
 ### 什么时候用微调？
